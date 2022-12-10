@@ -26,7 +26,10 @@ resource azurerm_app_service "app-service1" {
   resource_group_name = azurerm_resource_group.example.name
   https_only          = false
   site_config {
-    min_tls_version = "1.1"
+    http2_enabled = true
+    ftps_state = "Disabled"
+    dotnet_framework_version = "v6.0"
+    min_tls_version = "1.2"
   }
   tags = {
     git_commit           = "81738b80d571fa3034633690d13ffb460e1e7dea"
@@ -37,6 +40,14 @@ resource azurerm_app_service "app-service1" {
     git_org              = "bridgecrewio"
     git_repo             = "terragoat"
     yor_trace            = "13be096d-c599-46e5-bf54-51c6e9732858"
+  }
+  logs {
+    failed_request_tracing_enabled = true
+    detailed_error_messages_enabled = true
+  }
+  identity = true
+  storage_account {
+    type = "AzureFiles"
   }
 }
 
@@ -59,6 +70,19 @@ resource azurerm_app_service "app-service2" {
     git_org              = "bridgecrewio"
     git_repo             = "terragoat"
     yor_trace            = "ec8295ab-af68-4cff-b0f1-b0cf5eaf1b75"
+  }
+  site_config {
+    http2_enabled = true
+    ftps_state = "Disabled"
+    dotnet_framework_version = "v6.0"
+  }
+  logs {
+    failed_request_tracing_enabled = true
+    detailed_error_messages_enabled = true
+  }
+  identity = true
+  storage_account {
+    type = "AzureFiles"
   }
 }
 
